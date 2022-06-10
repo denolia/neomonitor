@@ -1,7 +1,9 @@
 import axios from "axios";
-import { InputData } from "../types";
+import { InputData, TableDefinition } from "../types";
 
-export async function runSearch({ model, environment, input }: InputData) {
+export async function runSearch({
+  model, environment, input, setResult,
+}: InputData & {setResult: (res: TableDefinition[]) => void}) {
   let res;
   try {
     res = await axios.post(
@@ -12,5 +14,8 @@ export async function runSearch({ model, environment, input }: InputData) {
     console.log(error);
   }
   console.log({ res });
+  if (res?.data) {
+    setResult(res.data.tables);
+  }
   return res;
 }

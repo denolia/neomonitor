@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { getConfiguration } from "../api/config";
+import { TableDefinition } from "../types";
 
-interface ConfigContext {
+interface StateContext {
   models: string[] | null;
   environments: string[] | null;
+  result: TableDefinition[] | null
+  setResult(result: TableDefinition[] | null): void;
+  loading: boolean;
+  setLoading(loading: boolean): void;
 }
 
-const configContext = React.createContext<ConfigContext>({
+const stateContext = React.createContext<StateContext>({
   models: null,
   environments: null,
+  result: null,
+  setResult: () => {},
+  loading: false,
+  setLoading: () => {},
 });
 
-export function useConfigContext(): ConfigContext {
-  const context = React.useContext(configContext);
+export function useStateContext(): StateContext {
+  const context = React.useContext(stateContext);
 
   if (!context) {
-    throw new Error("useConfigContext must be called inside the ConfigProvider");
+    throw new Error("useStateContext must be called inside the StateProvider");
   }
 
   return context;
 }
 
-function ConfigProvider({ children }: React.PropsWithChildren<{}>) {
+function StateProvider({ children }: React.PropsWithChildren<{}>) {
   const [models, setModels] = useState<string[] | null>(null);
   const [environments, setEnvironments] = useState<string[] | null>(null);
+  const [result, setResult] = useState<TableDefinition[] | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -39,13 +50,13 @@ function ConfigProvider({ children }: React.PropsWithChildren<{}>) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <configContext.Provider value={{
-      models, environments,
+    <stateContext.Provider value={{
+      models, environments, result, setResult, loading, setLoading,
     }}
     >
       {children }
-    </configContext.Provider>
+    </stateContext.Provider>
   );
 }
 
-export default ConfigProvider;
+export default StateProvider;

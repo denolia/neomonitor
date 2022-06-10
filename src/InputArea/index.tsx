@@ -3,23 +3,25 @@ import {
 } from "antd";
 import React from "react";
 import { runSearch } from "../api/search";
-import { useConfigContext } from "../Context/ConfigProvider";
+import { useStateContext } from "../Context/ConfigProvider";
 import { InputData } from "../types";
 import css from "./InputArea.module.css";
 
 function InputArea() {
   const [form] = Form.useForm();
-  const { models, environments } = useConfigContext();
+  const {
+    models, environments, setResult, setLoading,
+  } = useStateContext();
 
   return (
     <div className={css.container}>
       <Form
         layout="vertical"
         form={form}
-        onFinish={(values: InputData) => {
-          // set loading
-          runSearch(values);
-          // unset loading
+        onFinish={async (values: InputData) => {
+          setLoading(true);
+          await runSearch({ ...values, setResult });
+          setLoading(false);
         }}
       >
         <Row gutter={10}>
