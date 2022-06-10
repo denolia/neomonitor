@@ -1,0 +1,15 @@
+.name {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+.iconWrapper {
+    margin-right: 10px;
+}
