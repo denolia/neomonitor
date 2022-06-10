@@ -1,5 +1,5 @@
 import {
-  Button, Form, Input, Select,
+  Button, Col, Form, Input, Row, Select,
 } from "antd";
 import React from "react";
 import css from "./InputArea.module.css";
@@ -9,32 +9,53 @@ function InputArea() {
 
   return (
     <div className={css.container}>
-
       <Form
         layout="vertical"
         form={form}
       >
+        <Row gutter={10}>
+          <Col span={10}>
+            <Form.Item label="Input">
+              <Input placeholder="input" />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item
+              name="environment"
+              label="Environment"
+            >
+              <Select
+                placeholder="Select a option and change input text above"
+                allowClear
+              >
+                <Select.Option value="prod">prod</Select.Option>
+                <Select.Option value="staging">staging</Select.Option>
+                <Select.Option value="development">development</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item
+              name="model"
+              label="Model"
+            >
+              <Select
+                placeholder="Select a model"
+                allowClear
+              >
+                <Select.Option value="prod">prod</Select.Option>
+                <Select.Option value="staging">staging</Select.Option>
+                <Select.Option value="development">development</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={2}>
+            <Form.Item>
+              <Button type="primary">Search</Button>
+            </Form.Item>
+          </Col>
 
-        <Form.Item label="Input">
-          <Input placeholder="input" />
-        </Form.Item>
-        <Form.Item
-          name="environment"
-          label="Environment"
-          rules={[{ required: true }]}
-        >
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
-          >
-            <Select.Option value="prod">prod</Select.Option>
-            <Select.Option value="staging">staging</Select.Option>
-            <Select.Option value="development">development</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary">Search</Button>
-        </Form.Item>
+        </Row>
       </Form>
     </div>
 
