@@ -2,7 +2,9 @@ import {
   Button, Col, Form, Input, Row, Select,
 } from "antd";
 import React from "react";
+import { runSearch } from "../api/search";
 import { useConfigContext } from "../Context/ConfigProvider";
+import { InputData } from "../types";
 import css from "./InputArea.module.css";
 
 function InputArea() {
@@ -14,10 +16,15 @@ function InputArea() {
       <Form
         layout="vertical"
         form={form}
+        onFinish={(values: InputData) => {
+          // set loading
+          runSearch(values);
+          // unset loading
+        }}
       >
         <Row gutter={10}>
           <Col span={10}>
-            <Form.Item label="Input">
+            <Form.Item label="Input" name="input">
               <Input placeholder="input" />
             </Form.Item>
           </Col>
@@ -48,13 +55,11 @@ function InputArea() {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={2}>
-            <Form.Item>
-              <Button type="primary">Search</Button>
-            </Form.Item>
-          </Col>
-
+          <Col span={2} />
         </Row>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">Search</Button>
+        </Form.Item>
       </Form>
     </div>
 
