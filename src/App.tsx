@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import React from "react";
+import ConfigProvider from "./Context/ConfigProvider";
 import InputArea from "./InputArea";
 
 const dataSource = [
@@ -37,11 +38,12 @@ const columns = [
 function App() {
   return (
     <div className="App">
-      <InputArea />
-      <Table dataSource={dataSource} columns={columns} />
-      <Table dataSource={dataSource} columns={columns} />
-      <Table dataSource={dataSource} columns={columns} />
-
+      <ConfigProvider>
+        <InputArea />
+        <Table dataSource={dataSource} columns={columns} />
+        <Table dataSource={dataSource} columns={columns} />
+        <Table dataSource={dataSource} columns={columns} />
+      </ConfigProvider>
     </div>
   );
 }
