@@ -2,10 +2,12 @@ import {
   Button, Col, Form, Input, Row, Select,
 } from "antd";
 import React from "react";
+import { useConfigContext } from "../Context/ConfigProvider";
 import css from "./InputArea.module.css";
 
 function InputArea() {
   const [form] = Form.useForm();
+  const { models, environments } = useConfigContext();
 
   return (
     <div className={css.container}>
@@ -28,9 +30,7 @@ function InputArea() {
                 placeholder="Select a option and change input text above"
                 allowClear
               >
-                <Select.Option value="prod">prod</Select.Option>
-                <Select.Option value="staging">staging</Select.Option>
-                <Select.Option value="development">development</Select.Option>
+                {environments?.map((env) => <Select.Option key={env} value={env}>{env}</Select.Option>)}
               </Select>
             </Form.Item>
           </Col>
@@ -43,9 +43,8 @@ function InputArea() {
                 placeholder="Select a model"
                 allowClear
               >
-                <Select.Option value="prod">prod</Select.Option>
-                <Select.Option value="staging">staging</Select.Option>
-                <Select.Option value="development">development</Select.Option>
+                {models?.map((model) => <Select.Option key={model} value={model}>{model}</Select.Option>)}
+
               </Select>
             </Form.Item>
           </Col>
